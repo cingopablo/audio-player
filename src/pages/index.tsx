@@ -23,8 +23,8 @@ const IndexPage: React.FunctionComponent = () => (
       <AudioPlayer
         src={[
           'https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3',
-          'https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3',
-          'https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3',
+          'https://dsqqu7oxq6o1v.cloudfront.net/preview-903414-kuDvkQ84EK.mp3',
+          'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
         ]}
       />
     </div>

@@ -180,3 +180,78 @@ export const LoopIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = 
     </svg>
   )
 })
+
+// @ts-ignore
+export const VolumeDownIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = React.forwardRef((props, ref) => {
+  return (
+    <svg
+      xmlns={'http://www.w3.org/2000/svg'}
+      width={'16'}
+      height={'16'}
+      fill={'none'}
+      viewBox={'0 0 24 24'}
+      {...props}
+      ref={ref}>
+      <path
+        strokeLinejoin={'round'}
+        strokeLinecap={'round'}
+        strokeMiterlimit={'10'}
+        strokeWidth={'1'}
+        stroke={theme.palette.light.icon}
+        fill={'none'}
+        d={'M8 8H4V16H8L14 21V3L8 8Z'}
+      />
+      <path fill={'none'} d={'M18 15.46C19.2 14.77 20 13.48 20 12C20 10.52 19.2 9.22998 18 8.53998'} />
+      <path
+        strokeLinejoin={'round'}
+        strokeLinecap={'round'}
+        strokeMiterlimit={'10'}
+        strokeWidth={'1'}
+        stroke={theme.palette.light.icon}
+        d={'M18 15.46C19.2 14.77 20 13.48 20 12C20 10.52 19.2 9.22998 18 8.53998'}
+      />
+    </svg>
+  )
+})
+
+// @ts-ignore
+export const VolumeUpIcon: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = React.forwardRef((props, ref) => {
+  return (
+    <svg
+      xmlns={'http://www.w3.org/2000/svg'}
+      width={'16'}
+      height={'16'}
+      fill={'none'}
+      viewBox={'0 0 24 24'}
+      {...props}
+      ref={ref}>
+      <path
+        strokeLinejoin={'round'}
+        strokeLinecap={'round'}
+        strokeMiterlimit={'10'}
+        strokeWidth={'1'}
+        stroke={theme.palette.light.icon}
+        fill={'none'}
+        d={'M6 8H2V16H6L12 21V3L6 8Z'}
+      />
+      <path fill={'none'} d={'M16 19.75C19.45 18.86 22 15.73 22 12C22 8.27 19.45 5.14 16 4.25'} />
+      <path
+        strokeLinejoin={'round'}
+        strokeLinecap={'round'}
+        strokeMiterlimit={'10'}
+        strokeWidth={'1'}
+        stroke={theme.palette.light.icon}
+        d={'M16 19.75C19.45 18.86 22 15.73 22 12C22 8.27 19.45 5.14 16 4.25'}
+      />
+      <path fill={'none'} d={'M16 15.46C17.2 14.77 18 13.48 18 12C18 10.52 17.2 9.22998 16 8.53998'} />
+      <path
+        strokeLinejoin={'round'}
+        strokeLinecap={'round'}
+        strokeMiterlimit={'10'}
+        strokeWidth={'1'}
+        stroke={theme.palette.light.icon}
+        d={'M16 15.46C17.2 14.77 18 13.48 18 12C18 10.52 17.2 9.22998 16 8.53998'}
+      />
+    </svg>
+  )
+})

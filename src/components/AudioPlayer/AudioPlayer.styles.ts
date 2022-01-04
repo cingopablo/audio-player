@@ -4,6 +4,7 @@ export const theme = {
   palette: {
     light: {
       icon: '#9C5AF2',
+      border: '#e7e7e7',
       progressBar: {
         background: '#b3b3b3',
         played: '#2c2c2c',
@@ -14,6 +15,11 @@ export const theme = {
 }
 
 export const styles = {
+  audioContainer: css`
+    border: 1px solid ${theme.palette.light.border};
+    border-radius: 4px;
+    padding: 16px 24px;
+  `,
   container: css`
     display: flex;
     align-items: center;
@@ -40,6 +46,14 @@ export const styles = {
   selectedButton: (isSelected: boolean) => css`
     opacity: ${isSelected ? '1' : '0.5'};
     color: red;
+  `,
+  disabledButton: css`
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      transform: none;
+    }
   `,
   progressBar: css`
     appearance: none;
