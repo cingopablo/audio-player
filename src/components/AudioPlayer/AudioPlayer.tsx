@@ -1,190 +1,61 @@
-import { cx } from '@emotion/css'
 import * as React from 'react'
 
-import {
-  LoopIcon,
-  PauseIcon,
-  PlayIcon,
-  ShuffleIcon,
-  StepBackwardIcon,
-  StepForwardIcon,
-  VolumeDownIcon,
-  VolumeUpIcon,
-} from './AudioPlayer.icons'
-import { styles } from './AudioPlayer.styles'
+import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
+import { useStyles } from './AudioPlayer.styles'
+import { AudioPlayerContext, useAudioPlayer } from './AudioPlayer.utils'
+import { PlaybackControls } from './components/PlaybackControls/PlaybackControls'
+import { ProgressBar } from './components/ProgressBar/ProgressBar'
+import { VolumeBar } from './components/VolumeBar/VolumeBar'
 
-interface MusicPlayerProps {
-  src: string | string[]
-  mode?: 'compact' | 'default' | 'big'
+export type Track = {
+  src: string
+  img?: string
+  title: string
+  artist?: string
 }
 
-const calculateTime = (secs: number) => {
-  const minutes = Math.floor(secs / 60)
-  const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
-  const seconds = Math.floor(secs % 60)
-  const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
-  return `${returnedMinutes}:${returnedSeconds}`
+export type Mode = 'compact' | 'default' | 'big'
+
+interface AudioPlayerProps {
+  src: Track[]
+  mode?: Mode
+  theme?: ThemeMode
 }
 
 /* TODO:
  *       - Add disabled buttons & style
- *       - Add multitracks
- *       - Add shuffle
- *       - Box style
- *       - IMG style
+ *       - Add multitracks design
  *       - Compact, Default & BIG mode
  * */
 
-export const AudioPlayer: React.FunctionComponent<MusicPlayerProps> = ({ src, mode = 'default' }) => {
-  const [isPlaying, setIsPlaying] = React.useState(false)
-  const [duration, setDuration] = React.useState(0)
-  const [currentTime, setCurrentTime] = React.useState(0)
-  const [isShuffle, setIsShuffle] = React.useState(false)
-  const [isLoop, setIsLoop] = React.useState(false)
-  const [currentTrack, setCurrentTrack] = React.useState(0)
+export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({ src, theme, mode = 'default' }) => {
+  const value = useAudioPlayer(src)
 
-  const audioRef = React.useRef<HTMLAudioElement>(null)
-  const progressBarRef = React.useRef<HTMLInputElement>(null)
-  const animationRef = React.useRef(0)
+  const { isLoop, handleEnded, audioRef, track, onLoadedMetadata } = value
 
-  // React.useEffect(() => {
-  //   console.log(`Current track: ${currentTrack}`)
-  // })
-
-  const audio = React.useMemo(() => {
-    if (typeof src === 'string') return src
-    return src[currentTrack]
-  }, [currentTrack])
-
-  const onLoadedMetadata = (ev: any) => {
-    const seconds = Math.floor(ev.target.duration)
-    setDuration(seconds)
-    if (progressBarRef.current) {
-      progressBarRef.current.max = `${seconds}`
-    }
-  }
-
-  const handleEnded = () => {
-    if (currentTime === 0 || !progressBarRef.current) return
-    progressBarRef.current.value = '0'
-    changeRange()
-    setIsPlaying(false)
-  }
-
-  const handlePlay = React.useCallback(async () => {
-    if (!audioRef.current) return
-    setIsPlaying(last => !last)
-    if (!isPlaying && audioRef.current.paused) {
-      await audioRef.current?.play()
-      animationRef.current = window.requestAnimationFrame(whilePlaying)
-    } else {
-      audioRef.current?.pause()
-      cancelAnimationFrame(animationRef!.current!)
-    }
-  }, [currentTrack])
-
-  const whilePlaying = () => {
-    if (!progressBarRef.current) return
-    progressBarRef.current.value = `${audioRef!.current!.currentTime}`
-    changePlayerCurrentTime()
-    animationRef.current = window.requestAnimationFrame(whilePlaying)
-  }
-
-  const changeRange = () => {
-    if (!audioRef.current || !progressBarRef.current) return
-    audioRef.current.currentTime = parseInt(progressBarRef.current.value)
-    changePlayerCurrentTime()
-  }
-
-  const changePlayerCurrentTime = () => {
-    const currentTime = parseInt(progressBarRef.current!.value)
-    progressBarRef.current!.style.setProperty('--seek-before-width', `${(currentTime / duration) * 100}%`)
-    setCurrentTime(currentTime)
-  }
-
-  const changeAudio = async (where: 'back' | 'next') => {
-    if (!progressBarRef.current || !audioRef.current) return
-    setIsPlaying(false)
-    if (where === 'back') {
-      if (currentTime > 0) {
-        progressBarRef.current.value = '0'
-        changeRange()
-      } else {
-        setCurrentTrack(last => (currentTrack > 1 ? last - 1 : 0))
-      }
-    } else {
-      setCurrentTrack(last => (currentTrack < src.length - 1 ? last + 1 : 0))
-    }
-    progressBarRef.current.value = '0'
-    changeRange()
-  }
+  const systemTheme = useDetectTheme()
+  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
+  const styles = useStyles(_theme, mode)
 
   return (
-    <div className={styles.audioContainer}>
-      <audio
-        ref={audioRef}
-        src={audio}
-        preload={'metadata'}
-        onLoadedMetadata={onLoadedMetadata}
-        loop={isLoop}
-        onEnded={handleEnded}
-        // controls
-      />
-
-      {/* Progress bar */}
-      <input
-        ref={progressBarRef}
-        type={'range'}
-        defaultValue={0}
-        onChange={changeRange}
-        className={styles.progressBar}
-      />
-      <div className={cx(styles.container, styles.timestampsContainer)}>
-        {/* Current time */}
-        <div>{calculateTime(currentTime)}</div>
-        {/* Duration time */}
-        <div>{duration && !isNaN(duration) ? calculateTime(duration) : '00:00'}</div>
-      </div>
-
-      <div className={styles.container}>hola</div>
-
+    <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode }}>
       <div className={styles.container}>
-        {/* Shuffle */}
-        <button
-          onClick={() => setIsShuffle(last => !last)}
-          className={cx(styles.button, styles.selectedButton(isShuffle))}>
-          <ShuffleIcon />
-        </button>
-        {/* Back */}
-        <button className={cx(styles.button)} onClick={() => changeAudio('back')}>
-          <StepBackwardIcon />
-        </button>
-        {/* Play */}
-        <button onClick={handlePlay} className={cx(styles.button)}>
-          {isPlaying ? <PauseIcon /> : <PlayIcon />}
-        </button>
-        {/* Next */}
-        <button className={cx(styles.button)} onClick={() => changeAudio('next')}>
-          <StepForwardIcon />
-        </button>
-        {/* Loop */}
-        <button onClick={() => setIsLoop(last => !last)} className={cx(styles.button, styles.selectedButton(isLoop))}>
-          <LoopIcon />
-        </button>
+        <audio
+          loop={isLoop}
+          onEnded={handleEnded}
+          onLoadedMetadata={onLoadedMetadata}
+          preload={'metadata'}
+          ref={audioRef}
+          src={track.src}
+        />
+        <img alt={track.title} className={styles.image} src={track.img} />
+        <ProgressBar />
+        <div className={styles.title}>{track.title}</div>
+        <div className={styles.bottomContainer}>
+          <PlaybackControls />
+          <VolumeBar />
+        </div>
       </div>
-
-      <div className={styles.container}>
-        {/* Volume down */}
-        <button className={cx(styles.button)}>
-          <VolumeDownIcon />
-        </button>
-
-        <input type={'range'} defaultValue={20} className={styles.progressBar} />
-        {/* Volume up */}
-        <button className={cx(styles.button)}>
-          <VolumeUpIcon />
-        </button>
-      </div>
-    </div>
+    </AudioPlayerContext.Provider>
   )
 }
