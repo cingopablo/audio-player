@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css'
 import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
@@ -14,34 +15,46 @@ export type Track = {
   artist?: string
 }
 
-export type Mode = 'compact' | 'default' | 'big'
+export type Mode = 'mini' | 'compact' | 'default' | 'big'
 
 interface AudioPlayerProps {
-  src: Track[]
+  loop?: boolean
   mode?: Mode
+  shuffle?: boolean
+  src: Track[]
+  showVolume?: boolean
   theme?: ThemeMode
 }
 
 /* TODO:
  *       - Add disabled buttons & style
  *       - Add multitracks design
- *       - Compact, Default & BIG mode
+ *       - Mini, Compact, Default & BIG mode
+ *       - Responsive
  * */
 
-export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({ src, theme, mode = 'default' }) => {
-  const value = useAudioPlayer(src)
+export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
+  loop = false,
+  mode = 'default',
+  shuffle = false,
+  src,
+  showVolume = true,
+  theme,
+}) => {
+  const value = useAudioPlayer(src, loop, shuffle)
 
   const { isLoop, handleEnded, audioRef, track, onLoadedMetadata } = value
 
   const systemTheme = useDetectTheme()
-  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
+  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme, theme])
   const styles = useStyles(_theme, mode)
+  const _loop = isLoop ?? loop
 
   return (
-    <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode }}>
+    <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode, showVolume }}>
       <div className={styles.container}>
         <audio
-          loop={isLoop}
+          loop={_loop}
           onEnded={handleEnded}
           onLoadedMetadata={onLoadedMetadata}
           preload={'metadata'}
@@ -49,8 +62,18 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({ src, th
           src={track.src}
         />
         <img alt={track.title} className={styles.image} src={track.img} />
+
+        <div className={styles.text}>
+          <div className={cx(styles.title, styles.ellipsis(2))}>{track.title}</div>
+          {!!track.artist && (
+            <div className={cx(styles.artist, styles.ellipsis(1), { [styles.hide]: mode === 'mini' })}>
+              {track.artist}
+            </div>
+          )}
+        </div>
+
         <ProgressBar />
-        <div className={styles.title}>{track.title}</div>
+
         <div className={styles.bottomContainer}>
           <PlaybackControls />
           <VolumeBar />

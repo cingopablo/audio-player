@@ -3,21 +3,24 @@ import { css } from '@emotion/css'
 import { ThemeMode } from '../../../Theme/useDetectTheme'
 import { Mode } from '../../AudioPlayer'
 import { theme } from '../../AudioPlayer.styles'
+import { modeStyles } from '../../AudioPlayer.utils'
 
 export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
+  const mode = (_mini: string, _compact: string, _big: string, _default: string) =>
+    modeStyles(_mode, _mini, _compact, _big, _default)
   return {
     container: css`
       align-items: center;
-      display: flex;
+      display: ${mode('none', 'none', 'flex', 'flex')};
       gap: 4px;
       justify-content: center;
     `,
     volumeBar: css`
       appearance: none;
       background: ${selectedTheme.progressBar.background};
-      border-radius: 10px;
-      height: 4px;
+      border-radius: 16px;
+      height: 3px;
       margin: 0;
       outline: none;
       position: relative;
@@ -25,8 +28,8 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
 
       &::-webkit-slider-runnable-track {
         background: ${selectedTheme.progressBar.background};
-        border-radius: 10px;
-        height: 4px;
+        border-radius: 16px;
+        height: 3px;
         outline: none;
         position: relative;
         width: 100%;
@@ -34,8 +37,8 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
 
       &::-moz-range-track {
         background: ${selectedTheme.progressBar.background};
-        border-radius: 10px;
-        height: 4px;
+        border-radius: 16px;
+        height: 3px;
         outline: none;
         position: relative;
         width: 100%;
@@ -47,11 +50,11 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
 
       &::before {
         background-color: ${selectedTheme.progressBar.played};
-        border-bottom-left-radius: 10px;
-        border-top-left-radius: 10px;
+        border-bottom-left-radius: 16px;
+        border-top-left-radius: 16px;
         content: '';
         cursor: pointer;
-        height: 4px;
+        height: 3px;
         left: 0;
         position: absolute;
         top: 0;
@@ -65,9 +68,9 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
 
       &::-moz-range-progress {
         background-color: ${selectedTheme.progressBar.played};
-        border-bottom-left-radius: 10px;
-        border-top-left-radius: 10px;
-        height: 4px;
+        border-bottom-left-radius: 16px;
+        border-top-left-radius: 16px;
+        height: 3px;
       }
 
       &:hover::-moz-range-progress {
@@ -81,11 +84,11 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
         border: none;
         box-sizing: border-box;
         cursor: pointer;
-        height: 8px;
-        margin: -2px 0 0 0;
+        height: 16px;
+        margin: -7px 0 0 0;
         position: relative;
         transition: 350ms ease 0ms;
-        width: 8px;
+        width: 16px;
         z-index: 3;
       }
 
@@ -95,10 +98,10 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
         border: transparent;
         box-sizing: border-box;
         cursor: pointer;
-        height: 8px;
+        height: 16px;
         position: relative;
         transition: 350ms ease 0ms;
-        width: 8px;
+        width: 16px;
         z-index: 3;
       }
 
@@ -106,8 +109,11 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
         background: ${selectedTheme.progressBar.played};
-        transform: ${_mode !== 'compact' ? 'scale(3)' : 'scale(2)'};
+        transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)', 'scale(1.25)')};
       }
+    `,
+    hide: css`
+      display: none;
     `,
   }
 }

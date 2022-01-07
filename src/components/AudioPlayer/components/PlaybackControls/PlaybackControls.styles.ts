@@ -2,13 +2,16 @@ import { css } from '@emotion/css'
 
 import { ThemeMode } from '../../../Theme/useDetectTheme'
 import { Mode } from '../../AudioPlayer'
+import { modeStyles } from '../../AudioPlayer.utils'
 
 export const usePlaybackControlsStyles = (_theme: ThemeMode, _mode: Mode) => {
+  const mode = (_mini: string, _compact: string, _big: string, _default: string) =>
+    modeStyles(_mode, _mini, _compact, _big, _default)
   return {
     row: css`
       align-items: center;
       display: flex;
-      gap: 4px;
+      gap: ${mode('4px', '8px', '12px', '12px')};
       justify-content: center;
     `,
     button: css`
@@ -19,11 +22,7 @@ export const usePlaybackControlsStyles = (_theme: ThemeMode, _mode: Mode) => {
       display: flex;
       font-family: monospace;
       transition: 350ms ease 0ms;
-
-      ${_mode === 'compact' &&
-      css`
-        padding: 0;
-      `}
+      padding: 0;
 
       &:hover {
         transform: scale(1.05);

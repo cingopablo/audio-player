@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Track } from './AudioPlayer'
+import { Mode, Track } from './AudioPlayer'
 
 export const AudioPlayerContext = React.createContext<any>(undefined)
 
@@ -12,14 +12,27 @@ export const calculateTime = (secs: number) => {
   return `${returnedMinutes}:${returnedSeconds}`
 }
 
-export const useAudioPlayer = (src: Track[]) => {
+export const modeStyles = (_mode: Mode, _mini?: string, _compact?: string, _big?: string, _default?: string) => {
+  switch (_mode) {
+    case 'mini':
+      return _mini
+    case 'compact':
+      return _compact
+    case 'big':
+      return _big
+    case 'default':
+      return _default
+  }
+}
+
+export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean) => {
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [duration, setDuration] = React.useState(0)
   const [currentTime, setCurrentTime] = React.useState(0)
-  const [isShuffle, setIsShuffle] = React.useState(false)
-  const [isLoop, setIsLoop] = React.useState(false)
+  const [isShuffle, setIsShuffle] = React.useState(shuffle)
+  const [isLoop, setIsLoop] = React.useState(loop)
   const [currentTrack, setCurrentTrack] = React.useState(0)
-  const [volume, setVolume] = React.useState(0.4)
+  const [volume, setVolume] = React.useState(0.5)
 
   const audioRef = React.useRef<HTMLAudioElement>(null)
   const progressBarRef = React.useRef<HTMLInputElement>(null)
@@ -31,6 +44,9 @@ export const useAudioPlayer = (src: Track[]) => {
     changePlayerVolume(volume)
     audioRef.current.volume = volume
   }, [volume])
+
+  React.useEffect(() => setIsLoop(loop), [loop])
+  React.useEffect(() => setIsShuffle(shuffle), [shuffle])
 
   const shuffleTracks = React.useCallback(
     (tracks: Track[]) => {
@@ -76,14 +92,14 @@ export const useAudioPlayer = (src: Track[]) => {
 
   const handlePlay = React.useCallback(async () => {
     if (!audioRef.current) return
-    setIsPlaying(last => !last)
     if (!isPlaying && audioRef.current.paused) {
       await play()
     } else {
       audioRef.current?.pause()
       cancelAnimationFrame(animationRef!.current!)
     }
-  }, [currentTrack, currentTime])
+    setIsPlaying(last => !last)
+  }, [isPlaying, currentTrack, currentTime])
 
   const whilePlaying = () => {
     if (!progressBarRef.current) return
@@ -98,11 +114,12 @@ export const useAudioPlayer = (src: Track[]) => {
     changePlayerCurrentTime()
   }
 
-  const changePlayerCurrentTime = () => {
+  const changePlayerCurrentTime = React.useCallback(() => {
     const currentTime = parseInt(progressBarRef.current!.value)
-    progressBarRef.current!.style.setProperty('--seek-before-width', `${(currentTime / duration) * 100}%`)
+    const currentDuration = audioRef.current!.duration ?? 0
+    progressBarRef.current!.style.setProperty('--seek-before-width', `${(currentTime / currentDuration) * 100}%`)
     setCurrentTime(currentTime)
-  }
+  }, [duration])
 
   const changePlayerVolume = (vol: number) => {
     volumeBarRef.current!.style.setProperty('--volume-width', `${vol * 100}%`)

@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css'
 import * as React from 'react'
 
 import { useDetectTheme } from '../../../Theme/useDetectTheme'
@@ -10,7 +11,11 @@ export const ProgressBar: React.FunctionComponent = () => {
   const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
   const styles = useProgressBarStyles(_theme, mode)
   return (
-    <div className={styles.progressBarContainer}>
+    <div
+      className={cx({
+        [styles.progressBarContainer]: mode === 'compact' || mode === 'mini',
+        [styles.hide]: mode === 'mini',
+      })}>
       <input
         className={styles.progressBar}
         onChange={changeRange}
