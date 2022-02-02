@@ -37,26 +37,50 @@ export const theme = {
 
 export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
-  const mode = (_mini: string, _compact: string, _big: string, _default: string) =>
-    modeStyles(_mode, _mini, _compact, _big, _default)
+  const mode = (_mini: string, _compact: string, _default: string) => modeStyles(_mode, _mini, _compact, _default)
   return {
-    container: css`
+    grid: (isBig: boolean) => css`
+      display: flex;
+      ${!isBig &&
+      css`
+        flex-direction: column;
+      `};
+    `,
+    container: (showTracklist: boolean) => css`
       align-items: center;
       position: relative;
       background-color: ${selectedTheme.background};
-      border-radius: ${mode('0', '0', '24px', '24px')};
       color: ${selectedTheme.text.primary};
-      display: ${mode('flex', 'flex', 'flex', 'grid')};
-      grid-gap: ${mode('16px', '16px', '24px', '24px')};
-      justify-content: ${mode('flex-start', 'flex-start', 'center', 'center')};
-      max-width: ${mode('300px', '400px', '400px', '298px')};
       width: 100%;
-      max-height: ${mode('50px', '100px', 'fit-content', 'fit-content')};
-      padding: ${mode('8px 16px', '8px 16px', '32px', '24px')};
+      border-radius: ${showTracklist ? '24px 0 0 24px' : '24px'};
+      display: grid;
+      grid-gap: 24px;
+      justify-content: center;
+      max-width: 298px;
+      max-height: fit-content;
+      padding: 24px;
+    `,
+    mini: css`
+      border-radius: 0;
+      display: flex;
+      grid-gap: 16px;
+      justify-content: flex-start;
+      max-width: 300px;
+      max-height: 50px;
+      padding: 8px 16px;
+    `,
+    compact: css`
+      border-radius: 0;
+      display: flex;
+      grid-gap: 16px;
+      justify-content: flex-start;
+      max-width: 400px;
+      max-height: 100px;
+      padding: 8px 16px;
     `,
     bottomContainer: css`
       display: grid;
-      gap: ${mode('0', '0', '24px', '24px')};
+      gap: ${mode('0', '0', '24px')};
       ${(_mode === 'compact' || _mode === 'mini') &&
       css`
         display: flex;
@@ -66,22 +90,22 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     image: css`
       aspect-ratio: 1 / 1;
-      border-radius: ${mode('4px', '8px', '24px', '24px')};
+      border-radius: ${mode('4px', '8px', '24px')};
       justify-self: center;
-      margin-top: ${mode('0', '0', '5px', '5px')};
-      max-width: ${mode('34px', '68px', '100%', '100%')};
+      margin-top: ${mode('0', '0', '5px')};
+      max-width: ${mode('34px', '68px', '100%')};
     `,
 
     text: css`
-      text-align: ${mode('left', 'left', 'center', 'center')};
+      text-align: ${mode('left', 'left', 'center')};
       display: grid;
-      gap: ${mode('4px', '4px', '8px', '8px')}; ;
+      gap: ${mode('4px', '4px', '8px')}; ;
     `,
 
     title: css`
       font-weight: 700;
       align-self: flex-start;
-      font-size: ${mode('12px', '14px', '16px', '16px')};
+      font-size: ${mode('12px', '14px', '16px')};
     `,
 
     artist: css`

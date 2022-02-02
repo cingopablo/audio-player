@@ -27,9 +27,10 @@ const src: Track[] = [
 
 const IndexPage: React.FunctionComponent = () => {
   const [theme, setTheme] = React.useState<ThemeMode>('light')
-  const [mode, setMode] = React.useState<Mode>('default')
+  const [mode, setMode] = React.useState<Mode>('big')
   const [isLoop, setIsLoop] = React.useState(false)
   const [isShuffle, setIsShuffle] = React.useState(false)
+  const [isShowTracklist, setIsShowTracklist] = React.useState(true)
   const [isVolume, setIsVolume] = React.useState(false)
 
   return (
@@ -63,7 +64,6 @@ const IndexPage: React.FunctionComponent = () => {
         <select name={'select'} onChange={event => setMode(event.target.value as Mode)} value={mode}>
           <option value={'mini'}>Mini</option>
           <option value={'compact'}>Compact</option>
-          <option value={'default'}>Default</option>
           <option value={'big'}>Big</option>
         </select>
       </div>
@@ -94,6 +94,15 @@ const IndexPage: React.FunctionComponent = () => {
         </p>
         <input type={'checkbox'} checked={isVolume} onChange={() => setIsVolume(last => !last)} />
       </div>
+      <div>
+        <p
+          className={css`
+            font-weight: 600;
+          `}>
+          Show tracklist
+        </p>
+        <input type={'checkbox'} checked={isShowTracklist} onChange={() => setIsShowTracklist(last => !last)} />
+      </div>
 
       <div
         className={css`
@@ -101,7 +110,15 @@ const IndexPage: React.FunctionComponent = () => {
           justify-content: center;
           align-content: center;
         `}>
-        <AudioPlayer loop={isLoop} mode={mode} shuffle={isShuffle} src={src} theme={theme} showVolume={isVolume} />
+        <AudioPlayer
+          loop={isLoop}
+          mode={mode}
+          shuffle={isShuffle}
+          src={src}
+          theme={theme}
+          showVolume={isVolume}
+          showTracklist={isShowTracklist}
+        />
       </div>
     </Layout>
   )

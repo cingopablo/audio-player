@@ -7,12 +7,11 @@ import { modeStyles } from '../../AudioPlayer.utils'
 
 export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
-  const mode = (_mini: string, _compact: string, _big: string, _default: string) =>
-    modeStyles(_mode, _mini, _compact, _big, _default)
+  const mode = (_mini: string, _compact: string, _big: string) => modeStyles(_mode, _mini, _compact, _big)
   return {
     container: css`
       align-items: center;
-      display: ${mode('none', 'none', 'flex', 'flex')};
+      display: ${mode('none', 'none', 'flex')};
       gap: 4px;
       justify-content: center;
     `,
@@ -109,7 +108,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
         background: ${selectedTheme.progressBar.played};
-        transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)', 'scale(1.25)')};
+        transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)')};
       }
     `,
     hide: css`

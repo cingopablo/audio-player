@@ -5,13 +5,12 @@ import { Mode } from '../../AudioPlayer'
 import { modeStyles } from '../../AudioPlayer.utils'
 
 export const usePlaybackControlsStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const mode = (_mini: string, _compact: string, _big: string, _default: string) =>
-    modeStyles(_mode, _mini, _compact, _big, _default)
+  const mode = (_mini: string, _compact: string, _big: string) => modeStyles(_mode, _mini, _compact, _big)
   return {
     row: css`
       align-items: center;
       display: flex;
-      gap: ${mode('4px', '8px', '12px', '12px')};
+      gap: ${mode('4px', '8px', '12px')};
       justify-content: center;
     `,
     button: css`
