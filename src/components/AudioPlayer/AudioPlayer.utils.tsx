@@ -12,7 +12,7 @@ export const calculateTime = (secs: number) => {
   return `${returnedMinutes}:${returnedSeconds}`
 }
 
-export const modeStyles = (_mode: Mode, _mini?: string, _compact?: string, _big?: string, _default?: string) => {
+export const modeStyles = (_mode: Mode, _mini?: string, _compact?: string, _big?: string) => {
   switch (_mode) {
     case 'mini':
       return _mini
@@ -20,8 +20,6 @@ export const modeStyles = (_mode: Mode, _mini?: string, _compact?: string, _big?
       return _compact
     case 'big':
       return _big
-    case 'default':
-      return _default
   }
 }
 

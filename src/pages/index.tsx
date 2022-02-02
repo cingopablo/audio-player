@@ -23,6 +23,46 @@ const src: Track[] = [
     title: 'Song #2',
     img: 'https://i.imgur.com/l3ogBgn.jpeg',
   },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #3',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #4',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #5',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #6',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #7',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #8',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #9',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
+  {
+    src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
+    title: 'Song #10',
+    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+  },
 ]
 
 const IndexPage: React.FunctionComponent = () => {

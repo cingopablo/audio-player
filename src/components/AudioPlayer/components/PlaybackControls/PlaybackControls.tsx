@@ -13,7 +13,7 @@ export const PlaybackControls: React.FunctionComponent = () => {
   const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
   const styles = usePlaybackControlsStyles(_theme, mode)
 
-  const size = React.useMemo(() => modeStyles(mode, '32px', '48px', '64px', '64px'), [mode])
+  const size = React.useMemo(() => modeStyles(mode, '32px', '48px', '64px'), [mode])
   return (
     <div className={styles.row}>
       {/* Shuffle */}

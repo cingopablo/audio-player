@@ -7,9 +7,10 @@ import { modeStyles } from './AudioPlayer.utils'
 export const theme = {
   palette: {
     light: {
+      primary: '#9C5AF2',
       background: '#FFFFFF',
       icon: '#9C5AF2',
-      border: '#e7e7e7',
+      border: 'rgba(231,231,231,0.8)',
       text: {
         primary: '#000000',
         secondary: '#4e4e4e',
@@ -20,9 +21,10 @@ export const theme = {
       },
     },
     dark: {
+      primary: '#9C5AF2',
       background: '#414040',
       icon: '#FFFFFF',
-      border: '#e7e7e7',
+      border: 'rgba(231,231,231,0.8)',
       text: {
         primary: '#FFFFFF',
         secondary: '#a4a4a4',
@@ -57,7 +59,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       grid-gap: 24px;
       justify-content: center;
       max-width: 298px;
-      max-height: fit-content;
+      max-height: 515px;
       padding: 24px;
     `,
     mini: css`
@@ -99,7 +101,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     text: css`
       text-align: ${mode('left', 'left', 'center')};
       display: grid;
-      gap: ${mode('4px', '4px', '8px')}; ;
+      gap: ${mode('4px', '4px', '8px')};
     `,
 
     title: css`

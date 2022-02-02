@@ -16,13 +16,10 @@ export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
   const systemTheme = useDetectTheme()
   const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
   const styles = useTracklistStyles(_theme, mode)
-
-  console.log('SRC: ', src)
-
   return (
     <div className={cx(styles.container, { [styles.compact]: mode === 'compact' })}>
       {src.map(track => (
-        <TrackItem key={track.src} track={track} />
+        <TrackItem key={track.title} track={track} />
       ))}
     </div>
   )
