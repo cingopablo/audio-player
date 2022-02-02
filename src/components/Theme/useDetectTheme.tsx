@@ -14,14 +14,11 @@ export type ThemeMode = 'light' | 'dark'
 
 export const useDetectTheme = () => {
   const [mode, setMode] = React.useState<ThemeMode>(matchMedia(prefersColorScheme).matches ? 'dark' : 'light')
-
   const modeMe = (e: any) => setMode(e.matches ? 'dark' : 'light')
 
   React.useEffect(() => {
     matchMedia(prefersColorScheme).addEventListener('change', modeMe)
-
     return matchMedia(prefersColorScheme).removeEventListener('change', modeMe)
   }, [])
-
   return mode
 }

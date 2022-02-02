@@ -51,7 +51,7 @@ const GlobalCSS: React.FunctionComponent = () => {
 
 type Theme = typeof theme
 
-export const ThemeProvider1990: React.FunctionComponent = ({ children }) => {
+export const ThemeProviderAudio: React.FunctionComponent = ({ children }) => {
   const currentTheme = useDetectTheme()
   const currentPalette = currentTheme === 'light' ? paletteLight : paletteDark
 

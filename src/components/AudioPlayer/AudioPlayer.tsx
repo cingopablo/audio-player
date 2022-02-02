@@ -29,8 +29,7 @@ interface AudioPlayerProps {
 }
 
 /* TODO:
- *       - Add disabled buttons & style
- *       - Add multitracks design
+ *       - Get multitrack to work
  *       - Responsive
  * */
 

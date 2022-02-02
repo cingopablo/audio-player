@@ -1,7 +1,7 @@
 import { AnimatePresence } from 'framer-motion'
 import * as React from 'react'
 
-import { ThemeProvider1990 } from '../Theme'
+import { ThemeProviderAudio } from '../Theme'
 
 const Layout: React.FunctionComponent = ({ children }) => {
   const [isMounted, setIsMounted] = React.useState(false)
@@ -9,7 +9,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
   React.useEffect(() => setIsMounted(true), [])
 
   return (
-    <ThemeProvider1990>
+    <ThemeProviderAudio>
       <AnimatePresence>
         {isMounted && (
           <React.Fragment>
@@ -17,7 +17,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
           </React.Fragment>
         )}
       </AnimatePresence>
-    </ThemeProvider1990>
+    </ThemeProviderAudio>
   )
 }
 

@@ -1,15 +1,12 @@
 import { cx } from '@emotion/css'
 import * as React from 'react'
 
-import { useDetectTheme } from '../../../Theme/useDetectTheme'
 import { AudioPlayerContext, calculateTime } from '../../AudioPlayer.utils'
 import { useProgressBarStyles } from './ProgressBar.styles'
 
 export const ProgressBar: React.FunctionComponent = () => {
   const { mode, theme, changeRange, progressBarRef, currentTime, duration } = React.useContext<any>(AudioPlayerContext)
-  const systemTheme = useDetectTheme()
-  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
-  const styles = useProgressBarStyles(_theme, mode)
+  const styles = useProgressBarStyles(theme, mode)
   return (
     <div
       className={cx({

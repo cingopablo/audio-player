@@ -1,16 +1,13 @@
 import { cx } from '@emotion/css'
 import * as React from 'react'
 
-import { useDetectTheme } from '../../../Theme/useDetectTheme'
 import { VolumeDownIcon, VolumeUpIcon } from '../../AudioPlayer.icons'
 import { AudioPlayerContext } from '../../AudioPlayer.utils'
 import { useVolumeBarStyles } from './VolumeBar.styles'
 
 export const VolumeBar: React.FunctionComponent = () => {
   const { mode, theme, changeVolume, volumeBarRef, volume, showVolume } = React.useContext<any>(AudioPlayerContext)
-  const systemTheme = useDetectTheme()
-  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
-  const styles = useVolumeBarStyles(_theme, mode)
+  const styles = useVolumeBarStyles(theme, mode)
   return (
     <div className={cx(styles.container, { [styles.hide]: !showVolume })}>
       <VolumeDownIcon />

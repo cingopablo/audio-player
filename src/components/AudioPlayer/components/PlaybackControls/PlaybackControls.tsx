@@ -1,7 +1,6 @@
 import { cx } from '@emotion/css'
 import * as React from 'react'
 
-import { useDetectTheme } from '../../../Theme/useDetectTheme'
 import { LoopIcon, PauseIcon, PlayIcon, ShuffleIcon, StepBackwardIcon, StepForwardIcon } from '../../AudioPlayer.icons'
 import { AudioPlayerContext, modeStyles } from '../../AudioPlayer.utils'
 import { usePlaybackControlsStyles } from './PlaybackControls.styles'
@@ -9,10 +8,7 @@ import { usePlaybackControlsStyles } from './PlaybackControls.styles'
 export const PlaybackControls: React.FunctionComponent = () => {
   const { mode, theme, toggleShuffle, changeTrack, isShuffle, isPlaying, isLoop, handlePlay, toggleLoop } =
     React.useContext<any>(AudioPlayerContext)
-  const systemTheme = useDetectTheme()
-  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme])
-  const styles = usePlaybackControlsStyles(_theme, mode)
-
+  const styles = usePlaybackControlsStyles(theme, mode)
   const size = React.useMemo(() => modeStyles(mode, '32px', '48px', '64px'), [mode])
   return (
     <div className={styles.row}>
