@@ -15,9 +15,12 @@ export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
   const styles = useTracklistStyles(theme, mode)
   return (
     <div className={cx(styles.container, { [styles.compact]: mode === 'compact' })}>
-      {src.map(track => (
-        <TrackItem key={track.title} track={track} />
-      ))}
+      <p className={cx(styles.title)}>Coming up next</p>
+      <div className={styles.listContainer}>
+        {src.map(track => (
+          <TrackItem key={track.title} track={track} />
+        ))}
+      </div>
     </div>
   )
 }

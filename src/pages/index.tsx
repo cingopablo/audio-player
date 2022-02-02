@@ -71,7 +71,6 @@ const IndexPage: React.FunctionComponent = () => {
   const [isLoop, setIsLoop] = React.useState(false)
   const [isShuffle, setIsShuffle] = React.useState(false)
   const [isShowTracklist, setIsShowTracklist] = React.useState(true)
-  const [isVolume, setIsVolume] = React.useState(false)
 
   return (
     <Layout>
@@ -130,15 +129,6 @@ const IndexPage: React.FunctionComponent = () => {
           className={css`
             font-weight: 600;
           `}>
-          Show volume
-        </p>
-        <input type={'checkbox'} checked={isVolume} onChange={() => setIsVolume(last => !last)} />
-      </div>
-      <div>
-        <p
-          className={css`
-            font-weight: 600;
-          `}>
           Show tracklist
         </p>
         <input type={'checkbox'} checked={isShowTracklist} onChange={() => setIsShowTracklist(last => !last)} />
@@ -156,7 +146,6 @@ const IndexPage: React.FunctionComponent = () => {
           shuffle={isShuffle}
           src={src}
           theme={theme}
-          showVolume={isVolume}
           showTracklist={isShowTracklist}
         />
       </div>

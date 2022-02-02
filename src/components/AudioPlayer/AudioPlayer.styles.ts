@@ -48,19 +48,19 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
         flex-direction: column;
       `};
     `,
-    container: (showTracklist: boolean) => css`
+    container: css`
       align-items: center;
       position: relative;
       background-color: ${selectedTheme.background};
       color: ${selectedTheme.text.primary};
       width: 100%;
-      border-radius: ${showTracklist ? '24px 0 0 24px' : '24px'};
       display: grid;
+      grid-template-rows: 286px auto auto;
       grid-gap: 24px;
       justify-content: center;
-      max-width: 298px;
-      max-height: 515px;
-      padding: 24px;
+      max-width: 350px;
+      max-height: 585px;
+      padding: 32px;
     `,
     mini: css`
       border-radius: 0;
@@ -92,20 +92,24 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     image: css`
       aspect-ratio: 1 / 1;
-      border-radius: ${mode('4px', '8px', '24px')};
+      border-radius: ${mode('4px', '8px', '12px')};
       justify-self: center;
-      margin-top: ${mode('0', '0', '5px')};
-      max-width: ${mode('34px', '68px', '100%')};
+      max-width: ${mode('34px', '68px', '75%')};
+      transition: 300ms ease-in all;
+    `,
+
+    imageGrow: css`
+      max-width: 100%;
     `,
 
     text: css`
-      text-align: ${mode('left', 'left', 'center')};
+      text-align: left;
       display: grid;
-      gap: ${mode('4px', '4px', '8px')};
+      gap: 4px;
     `,
 
     title: css`
-      font-weight: 700;
+      font-weight: 600;
       align-self: flex-start;
       font-size: ${mode('12px', '14px', '16px')};
     `,
@@ -113,7 +117,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     artist: css`
       color: ${selectedTheme.text.secondary};
       font-weight: 500;
-      font-size: 12px;
+      font-size: ${mode('12px', '14px', '16px')};
     `,
 
     hide: css`

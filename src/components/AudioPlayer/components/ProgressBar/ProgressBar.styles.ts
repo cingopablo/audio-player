@@ -83,11 +83,11 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
         border: none;
         box-sizing: border-box;
         cursor: pointer;
-        height: ${mode('3px', '3px', '16px')};
-        margin: ${mode('0', '0', '-7px 0 0 0')};
+        height: ${mode('3px', '3px', '6px')};
+        margin: ${mode('0', '0', '-1px')};
         position: relative;
         transition: 350ms ease 0ms;
-        width: ${mode('6px', '6px', '16px')};
+        width: ${mode('6px', '6px', '6px')};
         z-index: 3;
       }
 
@@ -97,10 +97,10 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
         border: transparent;
         box-sizing: border-box;
         cursor: pointer;
-        height: ${mode('4px', '4px', '16px')};
+        height: ${mode('4px', '4px', '6px')};
         position: relative;
         transition: 350ms ease 0ms;
-        width: ${mode('4px', '4px', '16px')};
+        width: ${mode('4px', '4px', '6px')};
         z-index: 3;
       }
 
@@ -108,7 +108,7 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
         background: ${selectedTheme.progressBar.played};
-        transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)')};
+        transform: ${mode('scale(1)', 'scale(1)', 'scale(3)')};
       }
     `,
 

@@ -8,16 +8,21 @@ export const useTracklistStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
   return {
     container: css`
-      border-radius: 0 24px 24px 0;
       height: 100%;
-      width: 300px;
+      width: 350px;
+      padding: 32px;
       align-items: center;
       position: relative;
       color: ${selectedTheme.text.primary};
+      background-color: ${selectedTheme.background};
 
-      max-height: 515px;
+      max-height: 585px;
+    `,
+
+    listContainer: css`
+      margin-left: -12px;
+      max-height: 499px;
       overflow-y: auto;
-
       > div:not(:last-of-type) {
         border-bottom: 1px solid ${selectedTheme.border};
       }
@@ -26,6 +31,13 @@ export const useTracklistStyles = (_theme: ThemeMode, _mode: Mode) => {
       border-radius: 0;
       height: 150px;
       width: 400px;
+      padding: 0;
+    `,
+    title: css`
+      font-weight: 600;
+      align-self: flex-start;
+      font-size: 14px;
+      margin-bottom: 8px;
     `,
   }
 }
