@@ -11,10 +11,10 @@ interface TracklistProps {
 }
 
 export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
-  const { mode, theme } = React.useContext<any>(AudioPlayerContext)
+  const { mode, theme, isShowBackground } = React.useContext<any>(AudioPlayerContext)
   const styles = useTracklistStyles(theme, mode)
   return (
-    <div className={cx(styles.container, { [styles.compact]: mode === 'compact' })}>
+    <div className={cx(styles.container(isShowBackground), { [styles.compact]: mode === 'compact' })}>
       <p className={cx(styles.title)}>Coming up next</p>
       <div className={styles.listContainer}>
         {src.map(track => (

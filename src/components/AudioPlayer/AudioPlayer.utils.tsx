@@ -23,12 +23,13 @@ export const modeStyles = (_mode: Mode, _mini?: string, _compact?: string, _big?
   }
 }
 
-export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean) => {
+export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean, showBackground: boolean) => {
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [duration, setDuration] = React.useState(0)
   const [currentTime, setCurrentTime] = React.useState(0)
   const [isShuffle, setIsShuffle] = React.useState(shuffle)
   const [isLoop, setIsLoop] = React.useState(loop)
+  const [isShowBackground, setIsShowBackground] = React.useState(showBackground)
   const [currentTrack, setCurrentTrack] = React.useState(0)
   const [volume, setVolume] = React.useState(0.5)
 
@@ -45,6 +46,7 @@ export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean) =>
 
   React.useEffect(() => setIsLoop(loop), [loop])
   React.useEffect(() => setIsShuffle(shuffle), [shuffle])
+  React.useEffect(() => setIsShowBackground(showBackground), [showBackground])
 
   const shuffleTracks = React.useCallback(
     (tracks: Track[]) => {
@@ -168,6 +170,7 @@ export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean) =>
     isLoop,
     isPlaying,
     isShuffle,
+    isShowBackground,
     onLoadedMetadata,
     progressBarRef,
     toggleLoop,

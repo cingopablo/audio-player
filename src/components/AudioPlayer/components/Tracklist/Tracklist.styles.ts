@@ -7,16 +7,19 @@ import { theme } from '../../AudioPlayer.styles'
 export const useTracklistStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
   return {
-    container: css`
+    container: (showBackground?: boolean) => css`
       height: 100%;
       width: 350px;
       padding: 32px;
       align-items: center;
       position: relative;
       color: ${selectedTheme.text.primary};
-      //background-color: ${selectedTheme.background};
-
       max-height: 585px;
+
+      ${!showBackground &&
+      css`
+        background-color: ${selectedTheme.background};
+      `}
     `,
 
     listContainer: css`

@@ -49,20 +49,21 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
         flex-direction: column;
       `};
     `,
-    background: (color?: string) => css`
+    background: (color: string[]) => css`
       background-color: ${color};
-      transition: 300ms all ease-in;
+      background: ${color[0]};
+      background: radial-gradient(circle, ${color[0]} 0%, ${color[1]} 100%);
+      //transition: background-color 1500ms ease-in;
     `,
     backdropFilter: css`
       position: absolute;
       inset: 0;
-      box-shadow: inset 0 0 0 3000px rgba(255, 255, 255, 0.3);
-      filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(100px);
     `,
-    container: css`
+    container: (showBackground?: boolean) => css`
       align-items: center;
       position: relative;
-      //background-color: ${selectedTheme.background};
       color: ${selectedTheme.text.primary};
       width: 100%;
       display: grid;
@@ -72,6 +73,11 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       max-width: 350px;
       max-height: 585px;
       padding: 32px;
+
+      ${!showBackground &&
+      css`
+        background-color: ${selectedTheme.background};
+      `};
     `,
     mini: css`
       border-radius: 0;
@@ -125,10 +131,17 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       font-size: ${mode('12px', '14px', '16px')};
     `,
 
-    artist: css`
-      color: ${selectedTheme.text.secondary};
+    artist: (showBackground?: boolean) => css`
       font-weight: 500;
       font-size: ${mode('12px', '14px', '16px')};
+
+      ${showBackground
+        ? css`
+            color: rgba(255, 255, 255, 0.5);
+          `
+        : css`
+            color: ${selectedTheme.text.secondary};
+          `};
     `,
 
     hide: css`

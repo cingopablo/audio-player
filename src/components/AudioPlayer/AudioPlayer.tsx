@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
 import { useStyles } from './AudioPlayer.styles'
-import { AudioPlayerContext, encodeImage, useAudioPlayer } from './AudioPlayer.utils'
+import { AudioPlayerContext, useAudioPlayer } from './AudioPlayer.utils'
 import { PlaybackControls } from './components/PlaybackControls/PlaybackControls'
 import { ProgressBar } from './components/ProgressBar/ProgressBar'
 import { Tracklist } from './components/Tracklist/Tracklist'
@@ -25,6 +25,7 @@ interface AudioPlayerProps {
   shuffle?: boolean
   src: Track[]
   showTracklist?: boolean
+  showBackground?: boolean
   theme?: ThemeMode
 }
 
@@ -40,17 +41,19 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
   shuffle = false,
   src,
   showTracklist = true,
+  showBackground = false,
   theme,
 }) => {
-  const value = useAudioPlayer(src, loop, shuffle)
+  const value = useAudioPlayer(src, loop, shuffle, showBackground)
 
   const { isLoop, isPlaying, handleEnded, audioRef, track, onLoadedMetadata } = value
 
-  const [background, setBackground] = React.useState('')
+  const [background, setBackground] = React.useState([])
 
-  const { data, loading } = useColor(
+  const { data, loading } = usePalette(
     track.img ?? 'https://live.staticflickr.com/65535/50237066832_72c7290c5c_c.jpg',
-    'rgbString',
+    2,
+    'hex',
     { crossOrigin: 'anonymous' }
   )
 
@@ -60,19 +63,22 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
     }
   }, [data])
 
-  console.log('DATA: ', data)
+  console.log('DATA: ', data, showBackground)
 
   const systemTheme = useDetectTheme()
-  const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme, theme])
+  const _theme = React.useMemo(
+    () => (showBackground ? 'dark' : theme ?? systemTheme),
+    [systemTheme, theme, showBackground]
+  )
   const styles = useStyles(_theme, mode)
   const _loop = isLoop ?? loop
 
   return (
     <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode }}>
-      <div className={cx(styles.grid(mode === 'big'), styles.background(background))}>
-        <div className={styles.backdropFilter} />
+      <div className={cx(styles.grid(mode === 'big'), { [styles.background(background)]: showBackground })}>
+        {showBackground && <div className={styles.backdropFilter} />}
         <div
-          className={cx(styles.container, {
+          className={cx(styles.container(showBackground), {
             [styles.mini]: mode === 'mini',
             [styles.compact]: mode === 'compact',
           })}>
@@ -93,7 +99,8 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
           <div>
             <div className={styles.text}>
               <div className={cx(styles.title, styles.ellipsis(1))}>{track.title}</div>
-              <div className={cx(styles.artist, styles.ellipsis(1), { [styles.hide]: mode === 'mini' })}>
+              <div
+                className={cx(styles.artist(showBackground), styles.ellipsis(1), { [styles.hide]: mode === 'mini' })}>
                 {!!track?.artist ? track.artist : 'Unknown'}
               </div>
             </div>

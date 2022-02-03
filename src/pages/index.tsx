@@ -21,47 +21,47 @@ const src: Track[] = [
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #2',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #3',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #4',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #5',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #6',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #7',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #8',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #9',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
   {
     src: 'https://dsqqu7oxq6o1v.cloudfront.net/preview-896837-Ph03ujvClT.mp3',
     title: 'Song #10',
-    img: 'https://i.imgur.com/l3ogBgn.jpeg',
+    img: 'https://i.imgur.com/8tcxHWh.jpeg',
   },
 ]
 
@@ -71,6 +71,7 @@ const IndexPage: React.FunctionComponent = () => {
   const [isLoop, setIsLoop] = React.useState(false)
   const [isShuffle, setIsShuffle] = React.useState(false)
   const [isShowTracklist, setIsShowTracklist] = React.useState(true)
+  const [isShowBackground, setIsShowBackground] = React.useState(false)
 
   return (
     <Layout>
@@ -133,6 +134,15 @@ const IndexPage: React.FunctionComponent = () => {
         </p>
         <input type={'checkbox'} checked={isShowTracklist} onChange={() => setIsShowTracklist(last => !last)} />
       </div>
+      <div>
+        <p
+          className={css`
+            font-weight: 600;
+          `}>
+          Show background
+        </p>
+        <input type={'checkbox'} checked={isShowBackground} onChange={() => setIsShowBackground(last => !last)} />
+      </div>
 
       <div
         className={css`
@@ -147,6 +157,7 @@ const IndexPage: React.FunctionComponent = () => {
           src={src}
           theme={theme}
           showTracklist={isShowTracklist}
+          showBackground={isShowBackground}
         />
       </div>
     </Layout>
