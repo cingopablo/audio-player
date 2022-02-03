@@ -14,13 +14,12 @@ export const useTracklistStyles = (_theme: ThemeMode, _mode: Mode) => {
       align-items: center;
       position: relative;
       color: ${selectedTheme.text.primary};
-      background-color: ${selectedTheme.background};
+      //background-color: ${selectedTheme.background};
 
       max-height: 585px;
     `,
 
     listContainer: css`
-      margin-left: -12px;
       max-height: 499px;
       overflow-y: auto;
       > div:not(:last-of-type) {
@@ -37,7 +36,7 @@ export const useTracklistStyles = (_theme: ThemeMode, _mode: Mode) => {
       font-weight: 600;
       align-self: flex-start;
       font-size: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     `,
   }
 }

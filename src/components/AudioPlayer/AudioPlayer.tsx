@@ -1,9 +1,10 @@
 import { cx } from '@emotion/css'
+import { useColor, usePalette } from 'color-thief-react'
 import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
 import { useStyles } from './AudioPlayer.styles'
-import { AudioPlayerContext, useAudioPlayer } from './AudioPlayer.utils'
+import { AudioPlayerContext, encodeImage, useAudioPlayer } from './AudioPlayer.utils'
 import { PlaybackControls } from './components/PlaybackControls/PlaybackControls'
 import { ProgressBar } from './components/ProgressBar/ProgressBar'
 import { Tracklist } from './components/Tracklist/Tracklist'
@@ -28,8 +29,9 @@ interface AudioPlayerProps {
 }
 
 /* TODO:
- *       - Get multitrack to work
+ *       - Get multitrack to work - Play on click
  *       - Responsive
+ *       - Check COMPACT interface
  * */
 
 export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
@@ -44,6 +46,22 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
 
   const { isLoop, isPlaying, handleEnded, audioRef, track, onLoadedMetadata } = value
 
+  const [background, setBackground] = React.useState('')
+
+  const { data, loading } = useColor(
+    track.img ?? 'https://live.staticflickr.com/65535/50237066832_72c7290c5c_c.jpg',
+    'rgbString',
+    { crossOrigin: 'anonymous' }
+  )
+
+  React.useEffect(() => {
+    if (data !== undefined && !loading) {
+      setBackground(data)
+    }
+  }, [data])
+
+  console.log('DATA: ', data)
+
   const systemTheme = useDetectTheme()
   const _theme = React.useMemo(() => theme ?? systemTheme, [systemTheme, theme])
   const styles = useStyles(_theme, mode)
@@ -51,7 +69,8 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
 
   return (
     <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode }}>
-      <div className={styles.grid(mode === 'big')}>
+      <div className={cx(styles.grid(mode === 'big'), styles.background(background))}>
+        <div className={styles.backdropFilter} />
         <div
           className={cx(styles.container, {
             [styles.mini]: mode === 'mini',

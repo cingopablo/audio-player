@@ -8,15 +8,15 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
   return {
     container: css`
-      border-radius: 0;
+      border-radius: 4px;
       display: flex;
-      grid-gap: 16px;
+      grid-gap: 12px;
       justify-content: flex-start;
       max-width: 300px;
       height: 50px;
-      padding: 8px 12px;
+      padding: 4px 0 4px 4px;
       cursor: pointer;
-      background-color: ${selectedTheme.background};
+      //background-color: ${selectedTheme.background};
 
       &:hover {
         background-color: ${selectedTheme.primary};
@@ -28,15 +28,15 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     image: css`
       aspect-ratio: 1 / 1;
-      border-radius: 8px;
+      border-radius: 4px;
       justify-self: center;
       margin-top: 0;
-      max-width: 34px;
+      max-width: 100%;
     `,
     text: css`
       text-align: left;
       display: grid;
-      gap: 4px;
+      padding: 4px 10px 4px 0;
     `,
 
     title: css`

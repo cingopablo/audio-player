@@ -43,15 +43,26 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
   return {
     grid: (isBig: boolean) => css`
       display: flex;
+      position: relative;
       ${!isBig &&
       css`
         flex-direction: column;
       `};
     `,
+    background: (color?: string) => css`
+      background-color: ${color};
+      transition: 300ms all ease-in;
+    `,
+    backdropFilter: css`
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 0 3000px rgba(255, 255, 255, 0.3);
+      filter: blur(10px);
+    `,
     container: css`
       align-items: center;
       position: relative;
-      background-color: ${selectedTheme.background};
+      //background-color: ${selectedTheme.background};
       color: ${selectedTheme.text.primary};
       width: 100%;
       display: grid;
