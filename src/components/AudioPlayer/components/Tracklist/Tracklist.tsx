@@ -11,14 +11,23 @@ interface TracklistProps {
 }
 
 export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
-  const { mode, theme, isShowBackground } = React.useContext<any>(AudioPlayerContext)
+  const { mode, theme, isShowBackground, currentTrack, setCurrentTrack, changeTrack } =
+    React.useContext<any>(AudioPlayerContext)
   const styles = useTracklistStyles(theme, mode)
   return (
     <div className={cx(styles.container(isShowBackground), { [styles.compact]: mode === 'compact' })}>
-      <p className={cx(styles.title)}>Coming up next</p>
+      {mode === 'big' && <p className={cx(styles.title)}>Tracklist</p>}
       <div className={styles.listContainer}>
-        {src.map(track => (
-          <TrackItem key={track.title} track={track} />
+        {src.map((track, index) => (
+          <TrackItem
+            key={track.title}
+            track={track}
+            onClick={() => {
+              setCurrentTrack(index - 1)
+              changeTrack('next')
+            }}
+            className={cx({ [styles.selectedTrack]: currentTrack === index })}
+          />
         ))}
       </div>
     </div>

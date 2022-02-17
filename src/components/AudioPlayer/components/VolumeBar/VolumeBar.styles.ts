@@ -48,7 +48,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::before {
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         content: '';
@@ -62,23 +62,23 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &:hover::before {
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
       }
 
       &::-moz-range-progress {
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         height: 3px;
       }
 
       &:hover::-moz-range-progress {
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
       }
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
         border-radius: 50%;
         border: none;
         box-sizing: border-box;
@@ -92,7 +92,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::-moz-range-thumb {
-        background-color: ${selectedTheme.progressBar.played};
+        background-color: ${selectedTheme.text.primary};
         border-radius: 50%;
         border: transparent;
         box-sizing: border-box;
@@ -107,7 +107,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       &::-webkit-slider-thumb:hover,
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
-        background: ${selectedTheme.progressBar.played};
+        background: ${selectedTheme.text.primary};
         transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)')};
       }
     `,

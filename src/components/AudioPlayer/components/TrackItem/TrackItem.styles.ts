@@ -8,7 +8,6 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
   const selectedTheme = theme.palette[_theme]
   return {
     container: css`
-      border-radius: 4px;
       display: flex;
       grid-gap: 12px;
       justify-content: flex-start;
@@ -16,10 +15,9 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
       height: 50px;
       padding: 4px 0 4px 4px;
       cursor: pointer;
-      //background-color: ${selectedTheme.background};
 
       &:hover {
-        background-color: ${selectedTheme.primary};
+        background-color: ${selectedTheme.progressBar.hover};
       }
     `,
 

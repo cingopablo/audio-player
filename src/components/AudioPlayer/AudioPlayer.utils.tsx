@@ -178,5 +178,7 @@ export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean, sh
     track,
     volume,
     volumeBarRef,
+    currentTrack,
+    setCurrentTrack,
   }
 }

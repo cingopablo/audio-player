@@ -17,7 +17,7 @@ export const theme = {
       },
       progressBar: {
         background: '#b3b3b3',
-        played: '#9C5AF2',
+        hover: 'rgba(179, 179, 179, 0.2)',
       },
     },
     dark: {
@@ -31,7 +31,7 @@ export const theme = {
       },
       progressBar: {
         background: '#b3b3b3',
-        played: '#9C5AF2',
+        hover: 'rgba(179, 179, 179, 0.2)',
       },
     },
   },
@@ -52,7 +52,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     background: (color: string[]) => css`
       background-color: ${color};
       background: ${color[0]};
-      background: radial-gradient(circle, ${color[0]} 0%, ${color[1]} 100%);
+      background: radial-gradient(circle, ${color[1]} 70%, ${color[0]} 100%);
       //transition: background-color 1500ms ease-in;
     `,
     backdropFilter: css`
@@ -65,7 +65,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       align-items: center;
       position: relative;
       color: ${selectedTheme.text.primary};
-      width: 100%;
+      width: 350px;
       display: grid;
       grid-template-rows: 286px auto auto;
       grid-gap: 24px;
@@ -78,6 +78,10 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       css`
         background-color: ${selectedTheme.background};
       `};
+
+      path {
+        fill: ${selectedTheme.text.primary};
+      }
     `,
     mini: css`
       border-radius: 0;
@@ -111,7 +115,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
       aspect-ratio: 1 / 1;
       border-radius: ${mode('4px', '8px', '12px')};
       justify-self: center;
-      max-width: ${mode('34px', '68px', '75%')};
+      max-width: ${mode('34px', '68px', '81%')};
       transition: 300ms ease-in all;
     `,
 

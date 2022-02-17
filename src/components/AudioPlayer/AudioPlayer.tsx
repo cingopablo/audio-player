@@ -1,5 +1,5 @@
 import { cx } from '@emotion/css'
-import { useColor, usePalette } from 'color-thief-react'
+import { usePalette } from 'color-thief-react'
 import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
