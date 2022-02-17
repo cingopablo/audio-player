@@ -2,7 +2,7 @@ import { cx } from '@emotion/css'
 import * as React from 'react'
 
 import { Track } from '../../AudioPlayer'
-import { AudioPlayerContext } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps } from '../../AudioPlayer.utils'
 import { useTrackItemStyles } from './TrackItem.styles'
 
 interface TrackProps {
@@ -12,8 +12,8 @@ interface TrackProps {
 }
 
 export const TrackItem: React.FunctionComponent<TrackProps> = ({ track, onClick, className }) => {
-  const { mode, theme } = React.useContext<any>(AudioPlayerContext)
-  const styles = useTrackItemStyles(theme, mode)
+  const { mode } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const styles = useTrackItemStyles()
   return (
     <div onClick={onClick} className={cx(styles.container, { [styles.compact]: mode === 'compact' }, className)}>
       <img alt={track.title} src={track.img} className={styles.image} />

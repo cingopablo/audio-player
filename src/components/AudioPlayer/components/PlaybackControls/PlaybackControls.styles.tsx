@@ -1,16 +1,16 @@
 import { css } from '@emotion/css'
+import * as React from 'react'
 
-import { ThemeMode } from '../../../Theme/useDetectTheme'
-import { Mode } from '../../AudioPlayer'
-import { modeStyles } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 
-export const usePlaybackControlsStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const mode = (_mini: string, _compact: string, _big: string) => modeStyles(_mode, _mini, _compact, _big)
+export const usePlaybackControlsStyles = () => {
+  const { mode } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const _mode = (_mini: string, _compact: string, _big: string) => modeStyles(mode, _mini, _compact, _big)
   return {
     row: css`
       align-items: center;
       display: flex;
-      gap: ${mode('4px', '8px', '12px')};
+      gap: ${_mode('4px', '8px', '12px')};
       justify-content: center;
     `,
     button: css`

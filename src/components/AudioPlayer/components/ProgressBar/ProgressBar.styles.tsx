@@ -1,13 +1,11 @@
 import { css } from '@emotion/css'
+import * as React from 'react'
 
-import { ThemeMode } from '../../../Theme/useDetectTheme'
-import { Mode } from '../../AudioPlayer'
-import { theme } from '../../AudioPlayer.styles'
-import { modeStyles } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 
-export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const selectedTheme = theme.palette[_theme]
-  const mode = (_mini: string, _compact: string, _big: string) => modeStyles(_mode, _mini, _compact, _big)
+export const useProgressBarStyles = () => {
+  const { mode, theme } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const _mode = (_mini: string, _compact: string, _big: string) => modeStyles(mode, _mini, _compact, _big)
   return {
     progressBarContainer: css`
       position: absolute;
@@ -17,16 +15,16 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     progressBar: css`
       appearance: none;
-      background: ${selectedTheme.progressBar.background};
+      background: ${theme.progressBar.background};
       border-radius: 16px;
       height: 3px;
-      margin: ${mode('0', '0 0 4px 0', '0 0 12px 0')};
+      margin: ${_mode('0', '0 0 4px 0', '0 0 12px 0')};
       outline: none;
       position: relative;
       width: 100%;
 
       &::-webkit-slider-runnable-track {
-        background: ${selectedTheme.progressBar.background};
+        background: ${theme.progressBar.background};
         border-radius: 16px;
         height: 3px;
         outline: none;
@@ -35,7 +33,7 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::-moz-range-track {
-        background: ${selectedTheme.progressBar.background};
+        background: ${theme.progressBar.background};
         border-radius: 16px;
         height: 3px;
         outline: none;
@@ -48,7 +46,7 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::before {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         content: '';
@@ -62,59 +60,59 @@ export const useProgressBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &:hover::before {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
       }
 
       &::-moz-range-progress {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         height: 3px;
       }
 
       &:hover::-moz-range-progress {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
       }
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        background-color: ${selectedTheme.text.primary};
-        border-radius: ${mode('none', 'none', '50%')};
+        background-color: ${theme.text.primary};
+        border-radius: ${_mode('none', 'none', '50%')};
         border: none;
         box-sizing: border-box;
         cursor: pointer;
-        height: ${mode('3px', '3px', '6px')};
-        margin: ${mode('0', '0', '-1px')};
+        height: ${_mode('3px', '3px', '6px')};
+        margin: ${_mode('0', '0', '-1px')};
         position: relative;
         transition: 350ms ease 0ms;
-        width: ${mode('6px', '6px', '6px')};
+        width: ${_mode('6px', '6px', '6px')};
         z-index: 3;
       }
 
       &::-moz-range-thumb {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-radius: 50%;
         border: transparent;
         box-sizing: border-box;
         cursor: pointer;
-        height: ${mode('4px', '4px', '6px')};
+        height: ${_mode('4px', '4px', '6px')};
         position: relative;
         transition: 350ms ease 0ms;
-        width: ${mode('4px', '4px', '6px')};
+        width: ${_mode('4px', '4px', '6px')};
         z-index: 3;
       }
 
       &::-webkit-slider-thumb:hover,
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
-        background: ${selectedTheme.text.primary};
-        transform: ${mode('scale(1)', 'scale(1)', 'scale(3)')};
+        background: ${theme.text.primary};
+        transform: ${_mode('scale(1)', 'scale(1)', 'scale(3)')};
       }
     `,
 
     timestampsContainer: css`
       align-items: center;
-      display: ${mode('none', 'none', 'flex')};
+      display: ${_mode('none', 'none', 'flex')};
       font-size: 10px;
       font-weight: 500;
       justify-content: space-between;

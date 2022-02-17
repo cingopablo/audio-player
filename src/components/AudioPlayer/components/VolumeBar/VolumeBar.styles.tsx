@@ -1,23 +1,21 @@
 import { css } from '@emotion/css'
+import * as React from 'react'
 
-import { ThemeMode } from '../../../Theme/useDetectTheme'
-import { Mode } from '../../AudioPlayer'
-import { theme } from '../../AudioPlayer.styles'
-import { modeStyles } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 
-export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const selectedTheme = theme.palette[_theme]
-  const mode = (_mini: string, _compact: string, _big: string) => modeStyles(_mode, _mini, _compact, _big)
+export const useVolumeBarStyles = () => {
+  const { mode, theme } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const _mode = (_mini: string, _compact: string, _big: string) => modeStyles(mode, _mini, _compact, _big)
   return {
     container: css`
       align-items: center;
-      display: ${mode('none', 'none', 'flex')};
+      display: ${_mode('none', 'none', 'flex')};
       gap: 4px;
       justify-content: center;
     `,
     volumeBar: css`
       appearance: none;
-      background: ${selectedTheme.progressBar.background};
+      background: ${theme.progressBar.background};
       border-radius: 16px;
       height: 3px;
       margin: 0;
@@ -26,7 +24,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       width: 100%;
 
       &::-webkit-slider-runnable-track {
-        background: ${selectedTheme.progressBar.background};
+        background: ${theme.progressBar.background};
         border-radius: 16px;
         height: 3px;
         outline: none;
@@ -35,7 +33,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::-moz-range-track {
-        background: ${selectedTheme.progressBar.background};
+        background: ${theme.progressBar.background};
         border-radius: 16px;
         height: 3px;
         outline: none;
@@ -48,7 +46,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::before {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         content: '';
@@ -62,23 +60,23 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &:hover::before {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
       }
 
       &::-moz-range-progress {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-bottom-left-radius: 16px;
         border-top-left-radius: 16px;
         height: 3px;
       }
 
       &:hover::-moz-range-progress {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
       }
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-radius: 50%;
         border: none;
         box-sizing: border-box;
@@ -92,7 +90,7 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       }
 
       &::-moz-range-thumb {
-        background-color: ${selectedTheme.text.primary};
+        background-color: ${theme.text.primary};
         border-radius: 50%;
         border: transparent;
         box-sizing: border-box;
@@ -107,8 +105,8 @@ export const useVolumeBarStyles = (_theme: ThemeMode, _mode: Mode) => {
       &::-webkit-slider-thumb:hover,
       &::-webkit-slider-thumb:focus,
       &::-webkit-slider-thumb:active {
-        background: ${selectedTheme.text.primary};
-        transform: ${mode('scale(1)', 'scale(1)', 'scale(1.25)')};
+        background: ${theme.text.primary};
+        transform: ${_mode('scale(1)', 'scale(1)', 'scale(1.25)')};
       }
     `,
     hide: css`

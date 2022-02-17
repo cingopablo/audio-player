@@ -2,7 +2,7 @@ import { cx } from '@emotion/css'
 import * as React from 'react'
 
 import { Track } from '../../AudioPlayer'
-import { AudioPlayerContext } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps } from '../../AudioPlayer.utils'
 import { TrackItem } from '../TrackItem/TrackItem'
 import { useTracklistStyles } from './Tracklist.styles'
 
@@ -11,9 +11,9 @@ interface TracklistProps {
 }
 
 export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
-  const { mode, theme, isShowBackground, currentTrack, setCurrentTrack, changeTrack } =
-    React.useContext<any>(AudioPlayerContext)
-  const styles = useTracklistStyles(theme, mode)
+  const { mode, isShowBackground, currentTrack, setCurrentTrack, changeTrack } =
+    React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const styles = useTracklistStyles()
   return (
     <div className={cx(styles.container(isShowBackground), { [styles.compact]: mode === 'compact' })}>
       {mode === 'big' && <p className={cx(styles.title)}>Tracklist</p>}

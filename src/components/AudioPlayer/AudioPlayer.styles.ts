@@ -1,45 +1,11 @@
 import { css } from '@emotion/css'
 
-import { ThemeMode } from '../Theme/useDetectTheme'
 import { Mode } from './AudioPlayer'
+import { SelectedTheme } from './AudioPlayer.theme'
 import { modeStyles } from './AudioPlayer.utils'
 
-export const theme = {
-  palette: {
-    light: {
-      primary: '#9C5AF2',
-      background: '#FFFFFF',
-      icon: '#9C5AF2',
-      border: 'rgba(231,231,231,0.8)',
-      text: {
-        primary: '#000000',
-        secondary: '#4e4e4e',
-      },
-      progressBar: {
-        background: '#b3b3b3',
-        hover: 'rgba(179, 179, 179, 0.2)',
-      },
-    },
-    dark: {
-      primary: '#9C5AF2',
-      background: '#414040',
-      icon: '#FFFFFF',
-      border: 'rgba(231,231,231,0.8)',
-      text: {
-        primary: '#FFFFFF',
-        secondary: '#a4a4a4',
-      },
-      progressBar: {
-        background: '#b3b3b3',
-        hover: 'rgba(179, 179, 179, 0.2)',
-      },
-    },
-  },
-}
-
-export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const selectedTheme = theme.palette[_theme]
-  const mode = (_mini: string, _compact: string, _default: string) => modeStyles(_mode, _mini, _compact, _default)
+export const useStyles = (theme: SelectedTheme, mode: Mode) => {
+  const _mode = (_mini: string, _compact: string, _default: string) => modeStyles(mode, _mini, _compact, _default)
   return {
     grid: (isBig: boolean) => css`
       display: flex;
@@ -64,7 +30,7 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     container: (showBackground?: boolean) => css`
       align-items: center;
       position: relative;
-      color: ${selectedTheme.text.primary};
+      color: ${theme.text.primary};
       width: 350px;
       display: grid;
       grid-template-rows: 286px auto auto;
@@ -76,11 +42,11 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
 
       ${!showBackground &&
       css`
-        background-color: ${selectedTheme.background};
+        background-color: ${theme.background};
       `};
 
       path {
-        fill: ${selectedTheme.text.primary};
+        fill: ${theme.text.primary};
       }
     `,
     mini: css`
@@ -103,8 +69,8 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     bottomContainer: css`
       display: grid;
-      gap: ${mode('0', '0', '24px')};
-      ${(_mode === 'compact' || _mode === 'mini') &&
+      gap: ${_mode('0', '0', '24px')};
+      ${(mode === 'compact' || mode === 'mini') &&
       css`
         display: flex;
         flex-direction: column;
@@ -113,9 +79,9 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
     image: css`
       aspect-ratio: 1 / 1;
-      border-radius: ${mode('4px', '8px', '12px')};
+      border-radius: ${_mode('4px', '8px', '12px')};
       justify-self: center;
-      max-width: ${mode('34px', '68px', '81%')};
+      max-width: ${_mode('34px', '68px', '81%')};
       transition: 300ms ease-in all;
     `,
 
@@ -132,19 +98,19 @@ export const useStyles = (_theme: ThemeMode, _mode: Mode) => {
     title: css`
       font-weight: 600;
       align-self: flex-start;
-      font-size: ${mode('12px', '14px', '16px')};
+      font-size: ${_mode('12px', '14px', '16px')};
     `,
 
     artist: (showBackground?: boolean) => css`
       font-weight: 500;
-      font-size: ${mode('12px', '14px', '16px')};
+      font-size: ${_mode('12px', '14px', '16px')};
 
       ${showBackground
         ? css`
             color: rgba(255, 255, 255, 0.5);
           `
         : css`
-            color: ${selectedTheme.text.secondary};
+            color: ${theme.text.secondary};
           `};
     `,
 

@@ -1,12 +1,12 @@
 import * as React from 'react'
 
 import { VolumeDownIcon, VolumeUpIcon } from '../../AudioPlayer.icons'
-import { AudioPlayerContext } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps } from '../../AudioPlayer.utils'
 import { useVolumeBarStyles } from './VolumeBar.styles'
 
 export const VolumeBar: React.FunctionComponent = () => {
-  const { mode, theme, changeVolume, volumeBarRef, volume } = React.useContext<any>(AudioPlayerContext)
-  const styles = useVolumeBarStyles(theme, mode)
+  const { changeVolume, volumeBarRef, volume } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const styles = useVolumeBarStyles()
   return (
     <div className={styles.container}>
       <VolumeDownIcon />

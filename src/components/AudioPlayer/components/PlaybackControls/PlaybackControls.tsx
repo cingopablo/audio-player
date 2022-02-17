@@ -2,13 +2,13 @@ import { cx } from '@emotion/css'
 import * as React from 'react'
 
 import { LoopIcon, PauseIcon, PlayIcon, ShuffleIcon, StepBackwardIcon, StepForwardIcon } from '../../AudioPlayer.icons'
-import { AudioPlayerContext, modeStyles } from '../../AudioPlayer.utils'
+import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 import { usePlaybackControlsStyles } from './PlaybackControls.styles'
 
 export const PlaybackControls: React.FunctionComponent = () => {
-  const { mode, theme, toggleShuffle, changeTrack, isShuffle, isPlaying, isLoop, handlePlay, toggleLoop } =
-    React.useContext<any>(AudioPlayerContext)
-  const styles = usePlaybackControlsStyles(theme, mode)
+  const { mode, toggleShuffle, changeTrack, isShuffle, isPlaying, isLoop, handlePlay, toggleLoop } =
+    React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const styles = usePlaybackControlsStyles()
   const sizeMain = React.useMemo(() => modeStyles(mode, '32px', '48px', '64px'), [mode])
   const sizeSecondary = React.useMemo(() => modeStyles(mode, '24px', '32px', '48px'), [mode])
 

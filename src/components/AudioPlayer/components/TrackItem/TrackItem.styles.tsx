@@ -1,11 +1,10 @@
 import { css } from '@emotion/css'
+import * as React from 'react'
 
-import { ThemeMode } from '../../../Theme/useDetectTheme'
-import { Mode } from '../../AudioPlayer'
-import { theme } from '../../AudioPlayer.styles'
+import { AudioPlayerContext, AudioPlayerContextProps } from '../../AudioPlayer.utils'
 
-export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
-  const selectedTheme = theme.palette[_theme]
+export const useTrackItemStyles = () => {
+  const { theme } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
   return {
     container: css`
       display: flex;
@@ -17,7 +16,7 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
       cursor: pointer;
 
       &:hover {
-        background-color: ${selectedTheme.progressBar.hover};
+        background-color: ${theme.progressBar.hover};
       }
     `,
 
@@ -44,7 +43,7 @@ export const useTrackItemStyles = (_theme: ThemeMode, _mode: Mode) => {
     `,
 
     artist: css`
-      color: ${selectedTheme.text.secondary};
+      color: ${theme.text.secondary};
       font-weight: 500;
       font-size: 12px;
     `,

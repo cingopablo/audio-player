@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
 import { useStyles } from './AudioPlayer.styles'
+import { theme as appTheme } from './AudioPlayer.theme'
 import { AudioPlayerContext, useAudioPlayer } from './AudioPlayer.utils'
 import { PlaybackControls } from './components/PlaybackControls/PlaybackControls'
 import { ProgressBar } from './components/ProgressBar/ProgressBar'
@@ -30,9 +31,7 @@ interface AudioPlayerProps {
 }
 
 /* TODO:
- *       - Get multitrack to work - Play on click
  *       - Responsive
- *       - Check COMPACT interface
  * */
 
 export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
@@ -63,11 +62,9 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
     }
   }, [data])
 
-  console.log('DATA: ', data, showBackground)
-
   const systemTheme = useDetectTheme()
   const _theme = React.useMemo(
-    () => (showBackground ? 'dark' : theme ?? systemTheme),
+    () => appTheme.palette[showBackground ? 'dark' : theme ?? systemTheme],
     [systemTheme, theme, showBackground]
   )
   const styles = useStyles(_theme, mode)

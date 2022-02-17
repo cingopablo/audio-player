@@ -1,8 +1,35 @@
 import * as React from 'react'
 
 import { Mode, Track } from './AudioPlayer'
+import { SelectedTheme } from './AudioPlayer.theme'
 
-export const AudioPlayerContext = React.createContext<any>(undefined)
+export interface AudioPlayerContextProps {
+  audioRef: React.RefObject<HTMLAudioElement>
+  changeRange: () => void
+  changeTrack: (where: 'back' | 'next') => Promise<void>
+  changeVolume: (event: any) => void
+  currentTime: number
+  duration: number
+  handleEnded: () => Promise<void>
+  handlePlay: () => Promise<void>
+  isLoop: boolean
+  isPlaying: boolean
+  isShuffle: boolean
+  isShowBackground: boolean
+  onLoadedMetadata: (event: any) => void
+  progressBarRef: React.RefObject<HTMLInputElement>
+  toggleLoop: () => void
+  toggleShuffle: () => void
+  track: Track
+  volume: number
+  volumeBarRef: React.RefObject<HTMLInputElement>
+  currentTrack: number
+  setCurrentTrack: React.Dispatch<React.SetStateAction<number>>
+  theme: SelectedTheme
+  mode: Mode
+}
+
+export const AudioPlayerContext = React.createContext<AudioPlayerContextProps>({} as AudioPlayerContextProps)
 
 export const calculateTime = (secs: number) => {
   const minutes = Math.floor(secs / 60)
@@ -61,9 +88,9 @@ export const useAudioPlayer = (src: Track[], loop: boolean, shuffle: boolean, sh
 
   const track = React.useMemo(() => shuffleTracks(src)[currentTrack], [currentTrack])
 
-  const onLoadedMetadata = (ev: any) => {
+  const onLoadedMetadata = (event: any) => {
     if (!progressBarRef.current) return
-    const seconds = Math.floor(ev.target.duration)
+    const seconds = Math.floor(event.target.duration)
     setDuration(seconds)
     progressBarRef.current.max = `${seconds}`
   }
