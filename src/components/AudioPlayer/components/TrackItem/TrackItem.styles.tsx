@@ -1,10 +1,12 @@
 import { css } from '@emotion/css'
 import * as React from 'react'
 
-import { AudioPlayerContext, AudioPlayerContextProps } from '../../AudioPlayer.utils'
+import { Breakpoints } from '../../AudioPlayer.hooks'
+import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 
-export const useTrackItemStyles = () => {
-  const { theme } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+export const useTrackItemStyles = (breakpoint: Breakpoints) => {
+  const { theme, mode } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
+  const _mode = (_mini: string, _compact: string, _big: string) => modeStyles(mode, _mini, _compact, _big)
   return {
     container: css`
       display: flex;
@@ -12,7 +14,7 @@ export const useTrackItemStyles = () => {
       justify-content: flex-start;
       max-width: 300px;
       height: 50px;
-      padding: 4px 0 4px 4px;
+      padding: ${_mode('0', '4px 0 4px 16px', '4px 0 4px 4px')};
       cursor: pointer;
 
       &:hover {
@@ -21,7 +23,7 @@ export const useTrackItemStyles = () => {
     `,
 
     compact: css`
-      max-width: 400px;
+      max-width: ${breakpoint === 'xs' ? '100%' : '400px'};
     `,
     image: css`
       aspect-ratio: 1 / 1;

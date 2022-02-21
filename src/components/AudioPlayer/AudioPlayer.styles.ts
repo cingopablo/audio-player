@@ -1,10 +1,11 @@
 import { css } from '@emotion/css'
 
 import { Mode } from './AudioPlayer'
+import { Breakpoints } from './AudioPlayer.hooks'
 import { SelectedTheme } from './AudioPlayer.theme'
 import { modeStyles } from './AudioPlayer.utils'
 
-export const useStyles = (theme: SelectedTheme, mode: Mode) => {
+export const useStyles = (theme: SelectedTheme, mode: Mode, breakpoint: Breakpoints) => {
   const _mode = (_mini: string, _compact: string, _default: string) => modeStyles(mode, _mini, _compact, _default)
   return {
     grid: (isBig: boolean) => css`
@@ -19,7 +20,6 @@ export const useStyles = (theme: SelectedTheme, mode: Mode) => {
       background-color: ${color};
       background: ${color[0]};
       background: radial-gradient(circle, ${color[1]} 70%, ${color[0]} 100%);
-      //transition: background-color 1500ms ease-in;
     `,
     backdropFilter: css`
       position: absolute;
@@ -57,15 +57,25 @@ export const useStyles = (theme: SelectedTheme, mode: Mode) => {
       max-width: 300px;
       max-height: 50px;
       padding: 8px 16px;
+      ${breakpoint === 'xs' &&
+      css`
+        width: 100%;
+        max-width: unset;
+      `}
     `,
     compact: css`
       border-radius: 0;
       display: flex;
       grid-gap: 16px;
       justify-content: flex-start;
-      max-width: 400px;
       max-height: 100px;
       padding: 8px 16px;
+
+      ${breakpoint === 'xs' &&
+      css`
+        width: 100%;
+        max-width: unset;
+      `}
     `,
     bottomContainer: css`
       display: grid;

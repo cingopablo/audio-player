@@ -1,16 +1,17 @@
 import { css } from '@emotion/css'
 import * as React from 'react'
 
+import { Breakpoints } from '../../AudioPlayer.hooks'
 import { AudioPlayerContext, AudioPlayerContextProps, modeStyles } from '../../AudioPlayer.utils'
 
-export const useTracklistStyles = () => {
+export const useTracklistStyles = (breakpoint: Breakpoints) => {
   const { mode, theme } = React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
   const _mode = (_mini: string, _compact: string, _big: string) => modeStyles(mode, _mini, _compact, _big)
   return {
     container: (showBackground?: boolean) => css`
       height: ${_mode('0px', '256px', '100%')};
-      width: 350px;
-      padding: ${_mode('0', '8px 16px', '32px')};
+      width: ${breakpoint === 'xs' ? '100%' : '350px'};
+      padding: ${_mode('0', '0', '32px')};
       align-items: center;
       position: relative;
       color: ${theme.text.primary};

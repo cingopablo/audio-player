@@ -3,6 +3,7 @@ import { usePalette } from 'color-thief-react'
 import * as React from 'react'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
+import { useBreakpoint } from './AudioPlayer.hooks'
 import { useStyles } from './AudioPlayer.styles'
 import { theme as appTheme } from './AudioPlayer.theme'
 import { AudioPlayerContext, useAudioPlayer } from './AudioPlayer.utils'
@@ -31,7 +32,8 @@ interface AudioPlayerProps {
 }
 
 /* TODO:
- *       - Responsive
+ *       - Check scrollbar
+ *       - Cleanup
  * */
 
 export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
@@ -46,7 +48,7 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
   const value = useAudioPlayer(src, loop, shuffle, showBackground)
 
   const { isLoop, isPlaying, handleEnded, audioRef, track, onLoadedMetadata } = value
-
+  const breakpoint = useBreakpoint()
   const [background, setBackground] = React.useState([])
 
   const { data, loading } = usePalette(
@@ -67,17 +69,19 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
     () => appTheme.palette[showBackground ? 'dark' : theme ?? systemTheme],
     [systemTheme, theme, showBackground]
   )
-  const styles = useStyles(_theme, mode)
+
+  const _mode = React.useMemo(() => (mode === 'big' && breakpoint.max('sm') ? 'compact' : mode), [mode, breakpoint])
+  const styles = useStyles(_theme, _mode, breakpoint.value)
   const _loop = isLoop ?? loop
 
   return (
-    <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode }}>
-      <div className={cx(styles.grid(mode === 'big'), { [styles.background(background)]: showBackground })}>
+    <AudioPlayerContext.Provider value={{ ...value, theme: _theme, mode: _mode }}>
+      <div className={cx(styles.grid(_mode === 'big'), { [styles.background(background)]: showBackground })}>
         {showBackground && <div className={styles.backdropFilter} />}
         <div
           className={cx(styles.container(showBackground), {
-            [styles.mini]: mode === 'mini',
-            [styles.compact]: mode === 'compact',
+            [styles.mini]: _mode === 'mini',
+            [styles.compact]: _mode === 'compact',
           })}>
           <audio
             loop={_loop}
@@ -89,7 +93,7 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
           />
           <img
             alt={track.title}
-            className={cx(styles.image, { [styles.imageGrow]: isPlaying && mode === 'big' })}
+            className={cx(styles.image, { [styles.imageGrow]: isPlaying && _mode === 'big' })}
             src={track.img}
           />
 
@@ -97,7 +101,7 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
             <div className={styles.text}>
               <div className={cx(styles.title, styles.ellipsis(1))}>{track.title}</div>
               <div
-                className={cx(styles.artist(showBackground), styles.ellipsis(1), { [styles.hide]: mode === 'mini' })}>
+                className={cx(styles.artist(showBackground), styles.ellipsis(1), { [styles.hide]: _mode === 'mini' })}>
                 {!!track?.artist ? track.artist : 'Unknown'}
               </div>
             </div>
@@ -111,7 +115,7 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
           </div>
         </div>
 
-        {mode !== 'mini' && showTracklist && <Tracklist src={src} />}
+        {_mode !== 'mini' && showTracklist && <Tracklist src={src} />}
       </div>
     </AudioPlayerContext.Provider>
   )

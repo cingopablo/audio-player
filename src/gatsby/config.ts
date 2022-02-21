@@ -41,16 +41,6 @@ export default {
     },
     'gatsby-plugin-sitemap',
     'gatsby-plugin-robots-txt',
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Official Website of 1990 Group`,
-        short_name: `1990 Group`,
-        start_url: `/`,
-        display: `standalone`,
-        icon: 'src/images/logo.png',
-      },
-    },
     'gatsby-plugin-image',
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
