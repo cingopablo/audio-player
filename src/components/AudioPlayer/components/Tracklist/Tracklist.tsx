@@ -12,7 +12,7 @@ interface TracklistProps {
 }
 
 export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
-  const { mode, isShowBackground, currentTrack, setCurrentTrack, changeTrack } =
+  const { mode, isShowBackground, track, setCurrentTrack, changeTrack } =
     React.useContext<AudioPlayerContextProps>(AudioPlayerContext)
   const breakpoint = useBreakpoint()
   const styles = useTracklistStyles(breakpoint.value)
@@ -21,15 +21,15 @@ export const Tracklist: React.FunctionComponent<TracklistProps> = ({ src }) => {
     <div className={cx(styles.container(isShowBackground), { [styles.compact]: mode === 'compact' })}>
       {mode === 'big' && <p className={cx(styles.title)}>Tracklist</p>}
       <div className={styles.listContainer}>
-        {src.map((track, index) => (
+        {src.map((_track, index) => (
           <TrackItem
-            key={track.title}
-            track={track}
+            key={_track.title}
+            track={_track}
             onClick={() => {
               setCurrentTrack(index - 1)
               changeTrack('next')
             }}
-            className={cx({ [styles.selectedTrack]: currentTrack === index })}
+            className={cx({ [styles.selectedTrack]: track.id === _track.id })}
           />
         ))}
       </div>

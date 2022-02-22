@@ -36,7 +36,6 @@ export const useStyles = (theme: SelectedTheme, mode: Mode, breakpoint: Breakpoi
       grid-template-rows: 286px auto auto;
       grid-gap: 24px;
       justify-content: center;
-      max-width: 350px;
       max-height: 585px;
       padding: 32px;
 

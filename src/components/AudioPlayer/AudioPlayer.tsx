@@ -1,6 +1,7 @@
 import { cx } from '@emotion/css'
 import { usePalette } from 'color-thief-react'
 import * as React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { ThemeMode, useDetectTheme } from '../Theme/useDetectTheme'
 import { useBreakpoint } from './AudioPlayer.hooks'
@@ -13,6 +14,7 @@ import { Tracklist } from './components/Tracklist/Tracklist'
 import { VolumeBar } from './components/VolumeBar/VolumeBar'
 
 export type Track = {
+  id?: string
   src: string
   img?: string
   title: string
@@ -45,7 +47,8 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
   showBackground = false,
   theme,
 }) => {
-  const value = useAudioPlayer(src, loop, shuffle, showBackground)
+  const _src = React.useMemo(() => src.map(el => ({ ...el, id: el.id ? el.id : uuidv4() })), [src])
+  const value = useAudioPlayer(_src, loop, shuffle, showBackground)
 
   const { isLoop, isPlaying, handleEnded, audioRef, track, onLoadedMetadata } = value
   const breakpoint = useBreakpoint()
@@ -115,7 +118,7 @@ export const AudioPlayer: React.FunctionComponent<AudioPlayerProps> = ({
           </div>
         </div>
 
-        {_mode !== 'mini' && showTracklist && <Tracklist src={src} />}
+        {_mode !== 'mini' && showTracklist && <Tracklist src={_src} />}
       </div>
     </AudioPlayerContext.Provider>
   )
